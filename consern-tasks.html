@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consern Pharma Tasks Update System</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap">
+    <link rel="icon" href="https://drive.google.com/thumbnail?id=1Uv4aZ8E8FP73ZYrEuEAfzku4x9weaiez" type="image/png">
+    <style>
+        :root {
+            /* Consern Pharma Brand Colors */
+            --cp-primary: #0d4a6b;
+            --cp-secondary: #1e88e5;
+            --cp-accent: #00acc1;
+            --cp-success: #2e7d32;
+            --cp-warning: #ed6c02;
+            --cp-danger: #c62828;
+            --cp-dark: #0a2e47;
+            --cp-light: #f8fafc;
+            --cp-gray-50: #f8fafc;
+            --cp-gray-100: #f1f5f9;
+            --cp-gray-200: #e2e8f0;
+            --cp-gray-300: #cbd5e1;
+            --cp-gray-700: #334155;
+            --cp-gray-900: #0f172a;
+            
+            /* Futuristic Elements */
+            --gradient-primary: linear-gradient(135deg, var(--cp-primary) 0%, var(--cp-dark) 100%);
+            --gradient-accent: linear-gradient(90deg, var(--cp-secondary), var(--cp-accent));
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 15px rgba(30, 136, 229, 0.35);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            --transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--cp-gray-900);
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f7ff 100%);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        /* ===== AUTHENTICATION STYLES ===== */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-container::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(30,136,229,0.08) 0%, rgba(13,74,107,0.03) 40%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .auth-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+            position: relative;
+            transform: translateY(0);
+            animation: floatIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+        
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .auth-header {
+            padding: 2.5rem 2.5rem 1.5rem;
+            text-align: center;
+            background: var(--gradient-primary);
+            color: white;
+            position: relative;
+        }
+        
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow-glow);
+            border: 3px solid var(--cp-accent);
+            overflow: hidden;
+        }
+        
+        .auth-logo img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        
+        .auth-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, var(--cp-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        
+        .auth-subtitle {
+            color: rgba(255,255,255,0.85);
+            font-size: 1.125rem;
+            margin-top: 0.25rem;
+        }
+        
+        .auth-body {
+            padding: 2.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--cp-gray-700);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-label .material-symbols-outlined {
+            font-size: 1.25rem;
+            color: var(--cp-secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--cp-gray-200);
+            border-radius: var(--radius-md);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            background: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--cp-secondary);
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+        }
+        
+        .form-control:disabled {
+            background-color: var(--cp-gray-50);
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 1.75rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-accent);
+            z-index: -1;
+            transition: var(--transition);
+            opacity: 0;
+        }
+        
+        .btn:hover::after {
+            opacity: 1;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            width: 100%;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary::after {
+            opacity: 1;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--cp-secondary);
+            color: var(--cp-secondary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(30, 136, 229, 0.08);
+            transform: translateY(-1px);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--cp-gray-50);
+            color: var(--cp-gray-600);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--cp-gray-200);
+        }
+        
+        .access-denied {
+            background: linear-gradient(135deg, #ffebee 0%, #fff8e1 100%);
+            border-left: 4px solid var(--cp-danger);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .access-denied.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ===== DASHBOARD STYLES ===== */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: white;
+            box-shadow: var(--shadow-md);
+            padding: 0 2rem;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+        
+        .navbar-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: white;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid var(--cp-accent);
+        }
+        
+        .navbar-logo img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+        
+        .navbar-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-full);
+            background: var(--gradient-accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-name {
+            font-weight: 700;
+            color: var(--cp-gray-900);
+            font-size: 1.05rem;
+        }
+        
+        .user-role {
+            font-size: 0.875rem;
+            color: var(--cp-secondary);
+            font-weight: 500;
+        }
+        
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 72px);
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-md);
+            position: fixed;
+            height: calc(100vh - 72px);
+            z-index: 900;
+            transition: var(--transition);
+        }
+        
+        .sidebar-header {
+            padding: 0 1.75rem 1.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .sidebar-menu {
+            padding: 0 1rem;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .menu-item.active {
+            background: rgba(30, 136, 229, 0.35);
+            position: relative;
+        }
+        
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 4px;
+            background: var(--cp-accent);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+        
+        .menu-item .material-symbols-outlined {
+            font-size: 1.5rem;
+            min-width: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .content-area {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2.5rem;
+            background: var(--cp-light);
+            transition: var(--transition);
+        }
+        
+        .page-header {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .page-title-group {
+            max-width: 700px;
+        }
+        
+        .page-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .page-subtitle {
+            color: var(--cp-gray-700);
+            font-size: 1.25rem;
+            max-width: 650px;
+            line-height: 1.5;
+        }
+        
+        .welcome-banner {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--cp-accent);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-banner::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(30,136,229,0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .welcome-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--cp-dark);
+        }
+        
+        .welcome-message {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--cp-gray-800);
+        }
+        
+        .welcome-highlight {
+            background: linear-gradient(120deg, rgba(30,136,229,0.15) 0%, rgba(0,172,193,0.15) 100%);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--cp-primary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-action {
+            padding: 1.1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        
+        .btn-add-team {
+            background: white;
+            color: var(--cp-secondary);
+            border: 2px solid var(--cp-secondary);
+        }
+        
+        .btn-add-team:hover {
+            background: var(--cp-secondary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-update-tasks {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .btn-update-tasks:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px -8px rgba(13, 74, 107, 0.45);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border-top: 4px solid var(--cp-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(30,136,229,0.08) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .stat-icon {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 3.5rem;
+            color: rgba(30, 136, 229, 0.15);
+            z-index: 1;
+        }
+        
+        .stat-value {
+            font-family: 'Manrope', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+            color: var(--cp-dark);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-label {
+            color: var(--cp-gray-600);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-card.team {
+            border-top-color: var(--cp-accent);
+        }
+        
+        .stat-card.tasks {
+            border-top-color: #6a1b9a;
+        }
+        
+        .stat-card.due {
+            border-top-color: var(--cp-warning);
+        }
+        
+        /* ===== MODAL STYLES ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 15, 30, 0.82);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1.5rem;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 1000px;
+            max-height: 95vh;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 1.75rem 2.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.875rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .modal-title img {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            background: white;
+            padding: 4px;
+        }
+        
+        .modal-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-full);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+        
+        .modal-close:hover {
+            background: rgba(255,255,255,0.35);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem 2.5rem;
+            border-top: 1px solid var(--cp-gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            background: var(--cp-gray-50);
+        }
+        
+        /* ===== FORM STYLES ===== */
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.75rem;
+            border-bottom: 1px solid var(--cp-gray-200);
+        }
+        
+        .form-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--cp-dark);
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--cp-gray-100);
+        }
+        
+        .form-row-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .member-details {
+            background: var(--cp-gray-50);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-top: 0.75rem;
+            border-left: 3px solid var(--cp-accent);
+            display: none;
+        }
+        
+        .member-details.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .member-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--cp-gray-200);
+        }
+        
+        .member-detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--cp-gray-700);
+        }
+        
+        .detail-value {
+            color: var(--cp-dark);
+            font-weight: 500;
+        }
+        
+        .task-rows-container {
+            margin-top: 1.5rem;
+        }
+        
+        .task-row {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--cp-gray-200);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .task-row:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--cp-secondary);
+        }
+        
+        .task-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--cp-gray-200);
+        }
+        
+        .task-row-number {
+            background: var(--cp-secondary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .remove-row {
+            background: var(--cp-danger);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 1.25rem;
+        }
+        
+        .remove-row:hover {
+            background: #b71c1c;
+            transform: scale(1.1);
+        }
+        
+        .conditional-field {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--cp-gray-200);
+        }
+        
+        .conditional-field.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .date-preview {
+            background: var(--cp-gray-50);
+            border-left: 3px solid var(--cp-accent);
+            padding: 1rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin-top: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .date-preview-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--cp-gray-700);
+        }
+        
+        .date-preview-value {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.35rem;
+            color: var(--cp-primary);
+            font-weight: 700;
+        }
+        
+        .add-row-btn {
+            background: rgba(30, 136, 229, 0.08);
+            color: var(--cp-secondary);
+            border: 2px dashed var(--cp-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            width: 100%;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+        
+        .add-row-btn:hover {
+            background: rgba(30, 136, 229, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        /* ===== TABLE STYLES ===== */
+        .submitted-tasks {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-top: 2.5rem;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .submitted-tasks.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section-header {
+            padding: 1.75rem 2.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+        
+        th {
+            background-color: var(--cp-gray-50);
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            font-weight: 700;
+            color: var(--cp-dark);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--cp-gray-200);
+        }
+        
+        td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--cp-gray-200);
+            font-size: 1.05rem;
+        }
+        
+        tr:hover td {
+            background-color: var(--cp-gray-50);
+        }
+        
+        .member-avatar-table {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: var(--gradient-accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .task-id {
+            font-family: monospace;
+            font-weight: 700;
+            color: var(--cp-secondary);
+            background: rgba(30, 136, 229, 0.08);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-sm);
+        }
+        
+        .frequency-badge {
+            display: inline-block;
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .freq-daily { background: rgba(46, 125, 50, 0.15); color: var(--cp-success); }
+        .freq-weekly { background: rgba(237, 108, 2, 0.15); color: var(--cp-warning); }
+        .freq-monthly { background: rgba(106, 27, 154, 0.15); color: #6a1b9a; }
+        .freq-quarterly { background: rgba(13, 74, 107, 0.15); color: var(--cp-primary); }
+        .freq-half { background: rgba(0, 172, 193, 0.15); color: var(--cp-accent); }
+        .freq-yearly { background: rgba(198, 40, 40, 0.15); color: var(--cp-danger); }
+        
+        .due-date {
+            font-weight: 600;
+        }
+        
+        .due-date.overdue {
+            color: var(--cp-danger);
+        }
+        
+        .due-date.today {
+            color: var(--cp-warning);
+        }
+        
+        .due-date.upcoming {
+            color: var(--cp-success);
+        }
+        
+        /* ===== LOADING & UTILITY STYLES ===== */
+        .loader {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--cp-accent);
+            animation: spin 1s linear infinite;
+            margin-right: 12px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .btn.loading {
+            cursor: wait;
+            opacity: 0.85;
+        }
+        
+        .btn.loading span {
+            margin-left: 8px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-4 { margin-top: 1.5rem; }
+        .mb-4 { margin-bottom: 1.5rem; }
+        .mb-6 { margin-bottom: 2.5rem; }
+        
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .content-area {
+                margin-left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 1.5rem;
+                height: 68px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .action-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+            
+            .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .form-row-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .auth-card {
+                margin: 1rem;
+                max-width: 100%;
+            }
+            
+            .auth-body, .auth-header {
+                padding: 1.75rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal-content {
+                margin: 1rem;
+                max-width: calc(100% - 2rem);
+            }
+            
+            .modal-header, .modal-footer {
+                padding: 1.25rem 1.75rem;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+            
+            .page-title {
+                font-size: 2.1rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* ===== ANIMATIONS ===== */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(30, 136, 229, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(30, 136, 229, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(30, 136, 229, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* ===== LOGO HOVER EFFECTS ===== */
+        .logo-hover {
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .logo-hover:hover {
+            transform: scale(1.05) rotate(5deg);
+            filter: drop-shadow(0 0 8px rgba(30, 136, 229, 0.5));
+        }
+        
+        /* ===== CUSTOM CHECKBOXES & RADIOS ===== */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--cp-gray-200);
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .checkbox-item input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--cp-secondary);
+        }
+        
+        /* ===== DATE PICKER STYLING ===== */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            margin-right: 0.5rem;
+            filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
+            transition: var(--transition-fast);
+        }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            filter: invert(0.8) sepia(1) saturate(5) hue-rotate(180deg);
+            background: rgba(30, 136, 229, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== AUTHENTICATION PAGE ===== -->
+    <div class="auth-container" id="authPage">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo logo-hover">
+                    <img src="https://drive.google.com/thumbnail?id=1Uv4aZ8E8FP73ZYrEuEAfzku4x9weaiez" alt="Consern Pharma Logo">
+                </div>
+                <h1 class="auth-title">Consern Pharma Tasks Update System</h1>
+                <p class="auth-subtitle">Department Head Task Management Portal (April 2026 - March 2027)</p>
+            </div>
+            <div class="auth-body">
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        <span class="material-symbols-outlined">mail</span>
+                        Official Email Address
+                    </label>
+                    <input type="email" id="email" class="form-control" placeholder="hod.department@consernpharma.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">
+                        <span class="material-symbols-outlined">lock</span>
+                        Password (Gmail Users Only)
+                    </label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••">
+                    <small style="color: var(--cp-gray-500); font-size: 0.85rem; display: block; margin-top: 0.5rem;">
+                        Domain users: Leave blank for direct access | Gmail users: Enter your password
+                    </small>
+                </div>
+                <div class="access-denied" id="accessDenied">
+                    <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px; font-size: 1.5rem;">error</span>
+                    <strong>Access Denied:</strong> You do not have authorization to access this system. 
+                    Please contact MIS Department for access rights.
+                </div>
+                <button class="btn btn-primary pulse" id="loginBtn">
+                    <span class="material-symbols-outlined">login</span>
+                    Secure Login
+                </button>
+            </div>
+            <div class="auth-footer">
+                <p>Consern Pharma Internal System • Authorized Personnel Only • Period: April 1, 2026 - March 31, 2027</p>
+                <p style="margin-top: 0.5rem; font-weight: 500; color: var(--cp-secondary);">
+                    <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2rem;">info</span>
+                    For access issues, contact: mis.support@consernpharma.com
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="dashboard" id="dashboard">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="#" class="navbar-brand">
+                <div class="navbar-logo logo-hover">
+                    <img src="https://drive.google.com/thumbnail?id=1Uv4aZ8E8FP73ZYrEuEAfzku4x9weaiez" alt="Consern Pharma Logo">
+                </div>
+                <span class="navbar-title">Consern Pharma Tasks</span>
+            </a>
+            <div class="navbar-user">
+                <div class="user-info">
+                    <div class="user-name" id="userName">Dr. Rajesh Kumar</div>
+                    <div class="user-role">Head of Sales Department</div>
+                </div>
+                <div class="user-avatar">RK</div>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    Task Management Hub
+                </div>
+            </div>
+            <nav class="sidebar-menu">
+                <div class="menu-item active">
+                    <span class="material-symbols-outlined">home</span>
+                    Dashboard
+                </div>
+                <div class="menu-item" id="menuTeam">
+                    <span class="material-symbols-outlined">groups</span>
+                    Team Management
+                </div>
+                <div class="menu-item" id="menuTasks">
+                    <span class="material-symbols-outlined">task_alt</span>
+                    Task Submission
+                </div>
+                <div class="menu-item">
+                    <span class="material-symbols-outlined">assignment</span>
+                    Submitted Tasks
+                </div>
+                <div class="menu-item">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                    Department Calendar
+                </div>
+                <div class="menu-item">
+                    <span class="material-symbols-outlined">download</span>
+                    Export Reports
+                </div>
+                <div class="menu-item">
+                    <span class="material-symbols-outlined">history</span>
+                    Audit Logs
+                </div>
+                <div class="menu-item" id="logoutBtn">
+                    <span class="material-symbols-outlined">logout</span>
+                    Logout
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content-area">
+            <div class="page-header">
+                <div class="page-title-group">
+                    <h1 class="page-title">Department Task Management System</h1>
+                    <p class="page-subtitle">Submit and manage team tasks for the operational period: <strong>April 1, 2026 - March 31, 2027</strong>. All dates automatically adjusted for Sundays (non-working day) and company holidays.</p>
+                </div>
+            </div>
+
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="welcome-content">
+                    <h2 class="welcome-title">Welcome, Dr. Rajesh Kumar!</h2>
+                    <p class="welcome-message">As Head of Sales Department, you can <span class="welcome-highlight">submit tasks for your team members only</span>. This system ensures all tasks are properly scheduled within the April 2026 - March 2027 operational period with automatic holiday and Sunday adjustments. Your submissions will be instantly available to team members in their personal dashboards.</p>
+                    <div class="action-buttons">
+                        <button class="btn btn-action btn-add-team" id="openTeamModal">
+                            <span class="material-symbols-outlined">person_add</span>
+                            Add Team Members
+                        </button>
+                        <button class="btn btn-action btn-update-tasks pulse" id="openTaskModal">
+                            <span class="material-symbols-outlined">add_task</span>
+                            Update Task Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="material-symbols-outlined stat-icon">groups</span>
+                    <div class="stat-value">14</div>
+                    <div class="stat-label">Team Members</div>
+                </div>
+                <div class="stat-card team">
+                    <span class="material-symbols-outlined stat-icon">person_add</span>
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">New This Month</div>
+                </div>
+                <div class="stat-card tasks">
+                    <span class="material-symbols-outlined stat-icon">task_alt</span>
+                    <div class="stat-value">42</div>
+                    <div class="stat-label">Active Tasks</div>
+                </div>
+                <div class="stat-card due">
+                    <span class="material-symbols-outlined stat-icon">schedule</span>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Due This Week</div>
+                </div>
+            </div>
+
+            <!-- Submitted Tasks Section -->
+            <div class="submitted-tasks" id="submittedTasksSection">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="material-symbols-outlined">assignment</span>
+                        Submitted Tasks Overview
+                    </h2>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Team Member</th>
+                                <th>Task ID</th>
+                                <th>Frequency</th>
+                                <th>Description</th>
+                                <th>Pattern</th>
+                                <th>First Due Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="member-avatar-table">AS</div> Ananya Sharma</td>
+                                <td class="task-id">DT0042</td>
+                                <td><span class="frequency-badge freq-daily">Daily</span></td>
+                                <td>Update CRM with new client interactions</td>
+                                <td>Business Days</td>
+                                <td class="due-date today">Apr 1, 2026 18:00</td>
+                                <td><span class="status-badge status-upcoming">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="member-avatar-table">VS</div> Vikram Singh</td>
+                                <td class="task-id">WT0018</td>
+                                <td><span class="frequency-badge freq-weekly">Weekly</span></td>
+                                <td>Prepare weekly sales pipeline report</td>
+                                <td>Every Tuesday</td>
+                                <td>Apr 7, 2026 18:00</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="member-avatar-table">PP</div> Priya Patel</td>
+                                <td class="task-id">MT0027</td>
+                                <td><span class="frequency-badge freq-monthly">Monthly</span></td>
+                                <td>Client satisfaction survey distribution</td>
+                                <td>15th of Month</td>
+                                <td>Apr 15, 2026 18:00</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="member-avatar-table">AM</div> Arjun Mehta</td>
+                                <td class="task-id">QT0009</td>
+                                <td><span class="frequency-badge freq-quarterly">Quarterly</span></td>
+                                <td>Budget review and forecasting</td>
+                                <td>Apr 15, Jul 15...</td>
+                                <td>Apr 15, 2026 18:00</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="member-avatar-table">MK</div> Meera Krishnan</td>
+                                <td class="task-id">HT0005</td>
+                                <td><span class="frequency-badge freq-half">Half-Yearly</span></td>
+                                <td>Strategic partnership review</td>
+                                <td>Apr 10, Oct 10</td>
+                                <td>Apr 10, 2026 18:00</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== TEAM MEMBER MODAL ===== -->
+    <div class="modal" id="teamModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <img src="https://drive.google.com/thumbnail?id=1Uv4aZ8E8FP73ZYrEuEAfzku4x9weaiez" alt="Logo">
+                    Add Team Members
+                </h2>
+                <button class="modal-close" id="closeTeamModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <span class="material-symbols-outlined">person_add</span>
+                        Team Member Details
+                    </h3>
+                    <div class="form-row-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="memberName">Full Name *</label>
+                            <input type="text" id="memberName" class="form-control" placeholder="e.g., Ananya Sharma" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="designation">Designation *</label>
+                            <select id="designation" class="form-control" required>
+                                <option value="">Select designation</option>
+                                <option value="Executive">Executive</option>
+                                <option value="Sr. Executive">Sr. Executive</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Sr. Manager">Sr. Manager</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="memberEmail">Email ID *</label>
+                            <input type="email" id="memberEmail" class="form-control" placeholder="member@consernpharma.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="memberMobile">Mobile Number *</label>
+                            <input type="tel" id="memberMobile" class="form-control" placeholder="+91 98765 43210" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <small style="color: var(--cp-gray-600); font-size: 0.9rem; display: block; margin-top: 0.5rem;">
+                            <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 6px; font-size: 1.1rem;">info</span>
+                            All team members will be linked to your department. They will receive task notifications via email.
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelTeamBtn">
+                    <span class="material-symbols-outlined">close</span>
+                    Cancel
+                </button>
+                <button class="btn btn-primary" id="submitTeamBtn">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Add Team Member
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TASK SUBMISSION MODAL ===== -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <img src="https://drive.google.com/thumbnail?id=1Uv4aZ8E8FP73ZYrEuEAfzku4x9weaiez" alt="Logo">
+                    Update Task Details
+                </h2>
+                <button class="modal-close" id="closeTaskModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <span class="material-symbols-outlined">groups</span>
+                        Select Team Member
+                    </h3>
+                    <div class="form-group">
+                        <label class="form-label" for="globalTeamMember">Team Member *</label>
+                        <select id="globalTeamMember" class="form-control" required>
+                            <option value="">Select team member to assign tasks</option>
+                            <option value="ananya">Ananya Sharma (Sales Executive)</option>
+                            <option value="vikram">Vikram Singh (Account Manager)</option>
+                            <option value="priya">Priya Patel (Sales Lead)</option>
+                            <option value="arjun">Arjun Mehta (Business Development)</option>
+                            <option value="meera">Meera Krishnan (Client Relations)</option>
+                        </select>
+                        <div class="member-details" id="globalMemberDetails">
+                            <div class="member-detail-row">
+                                <span class="detail-label">Name:</span>
+                                <span class="detail-value" id="detailName">Ananya Sharma</span>
+                            </div>
+                            <div class="member-detail-row">
+                                <span class="detail-label">Designation:</span>
+                                <span class="detail-value" id="detailDesignation">Sales Executive</span>
+                            </div>
+                            <div class="member-detail-row">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value" id="detailEmail">ananya.sharma@consernpharma.com</span>
+                            </div>
+                            <div class="member-detail-row">
+                                <span class="detail-label">Mobile:</span>
+                                <span class="detail-value" id="detailMobile">+91 98765 43210</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <span class="material-symbols-outlined">list_alt</span>
+                        Task Entries (Minimum 10 Rows)
+                    </h3>
+                    <div class="task-rows-container" id="taskRowsContainer">
+                        <!-- Task rows will be dynamically generated here -->
+                    </div>
+                    <button class="btn add-row-btn" id="addTaskRow">
+                        <span class="material-symbols-outlined">add</span>
+                        Add Another Task Row
+                    </button>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <span class="material-symbols-outlined">schedule</span>
+                        Scheduling Intelligence
+                    </h3>
+                    <div style="background: rgba(13, 74, 107, 0.06); border-radius: var(--radius-md); padding: 1.5rem; border-left: 3px solid var(--cp-primary);">
+                        <p style="margin-bottom: 0.75rem; font-weight: 500;">
+                            <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px; color: var(--cp-primary);">info</span>
+                            <strong>System automatically calculates First Due Date with these rules:</strong>
+                        </p>
+                        <ul style="padding-left: 1.75rem; line-height: 1.7;">
+                            <li>All tasks start from <strong>April 1, 2026</strong> (operational period start)</li>
+                            <li>Skips Sundays (non-working day) and all company holidays</li>
+                            <li>Daily tasks: First due date = April 1, 2026 at 18:00:00</li>
+                            <li>Weekly tasks: Based on selected weekday(s), first occurrence on/after April 1, 2026</li>
+                            <li>Monthly tasks: Based on selected date in April 2026 (e.g., 15th)</li>
+                            <li>Quarterly tasks: Limited to April-June 2026 selection period</li>
+                            <li>Half-Yearly tasks: Limited to April-September 2026 selection period</li>
+                            <li>Yearly tasks: Limited to April 2026 - March 2027 selection period</li>
+                            <li>All dates set to 18:00:00 (6:00 PM IST)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelTaskBtn">
+                    <span class="material-symbols-outlined">close</span>
+                    Cancel
+                </button>
+                <button class="btn btn-primary" id="submitTasksBtn">
+                    <span class="material-symbols-outlined">task_alt</span>
+                    Submit All Tasks
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const authPage = document.getElementById('authPage');
+        const dashboard = document.getElementById('dashboard');
+        const loginBtn = document.getElementById('loginBtn');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const accessDenied = document.getElementById('accessDenied');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const openTeamModalBtn = document.getElementById('openTeamModal');
+        const openTaskModalBtn = document.getElementById('openTaskModal');
+        const teamModal = document.getElementById('teamModal');
+        const taskModal = document.getElementById('taskModal');
+        const closeTeamModal = document.getElementById('closeTeamModal');
+        const closeTaskModal = document.getElementById('closeTaskModal');
+        const cancelTeamBtn = document.getElementById('cancelTeamBtn');
+        const cancelTaskBtn = document.getElementById('cancelTaskBtn');
+        const submitTeamBtn = document.getElementById('submitTeamBtn');
+        const submitTasksBtn = document.getElementById('submitTasksBtn');
+        const addTaskRowBtn = document.getElementById('addTaskRow');
+        const taskRowsContainer = document.getElementById('taskRowsContainer');
+        const globalTeamMember = document.getElementById('globalTeamMember');
+        const globalMemberDetails = document.getElementById('globalMemberDetails');
+        const detailName = document.getElementById('detailName');
+        const detailDesignation = document.getElementById('detailDesignation');
+        const detailEmail = document.getElementById('detailEmail');
+        const detailMobile = document.getElementById('detailMobile');
+        const submittedTasksSection = document.getElementById('submittedTasksSection');
+        
+        // Team member database (simulated)
+        const teamDatabase = {
+            ananya: {
+                name: "Ananya Sharma",
+                designation: "Sales Executive",
+                email: "ananya.sharma@consernpharma.com",
+                mobile: "+91 98765 43210"
+            },
+            vikram: {
+                name: "Vikram Singh",
+                designation: "Account Manager",
+                email: "vikram.singh@consernpharma.com",
+                mobile: "+91 87654 32109"
+            },
+            priya: {
+                name: "Priya Patel",
+                designation: "Sales Lead",
+                email: "priya.patel@consernpharma.com",
+                mobile: "+91 76543 21098"
+            },
+            arjun: {
+                name: "Arjun Mehta",
+                designation: "Business Development",
+                email: "arjun.mehta@consernpharma.com",
+                mobile: "+91 65432 10987"
+            },
+            meera: {
+                name: "Meera Krishnan",
+                designation: "Client Relations",
+                email: "meera.krishnan@consernpharma.com",
+                mobile: "+91 54321 09876"
+            }
+        };
+        
+        // Initialize task rows
+        function initializeTaskRows(count = 10) {
+            taskRowsContainer.innerHTML = '';
+            for (let i = 1; i <= count; i++) {
+                taskRowsContainer.appendChild(createTaskRow(i));
+            }
+        }
+        
+        // Create a single task row
+        function createTaskRow(index) {
+            const row = document.createElement('div');
+            row.className = 'task-row';
+            row.innerHTML = `
+                <div class="task-row-header">
+                    <div class="task-row-number">${index}</div>
+                    ${index > 10 ? `<button class="remove-row" data-index="${index}">delete</button>` : ''}
+                </div>
+                <div class="form-row-grid">
+                    <div class="form-group">
+                        <label class="form-label">Team Member (Auto-filled)</label>
+                        <input type="text" class="form-control task-member-name" value="Ananya Sharma" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Task Description *</label>
+                        <textarea class="form-control task-description" rows="2" placeholder="e.g., Follow up with ABC Corp regarding Q3 renewal" required></textarea>
+                    </div>
+                </div>
+                <div class="form-row-grid">
+                    <div class="form-group">
+                        <label class="form-label">Frequency *</label>
+                        <select class="form-control task-frequency" required>
+                            <option value="">Select frequency</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="half-yearly">Half-Yearly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="form-group conditional-field task-weekday-field">
+                        <label class="form-label">Select Week Day(s) *</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item"><input type="checkbox" name="weekday-${index}" value="monday"> Monday</label>
+                            <label class="checkbox-item"><input type="checkbox" name="weekday-${index}" value="tuesday"> Tuesday</label>
+                            <label class="checkbox-item"><input type="checkbox" name="weekday-${index}" value="wednesday"> Wednesday</label>
+                            <label class="checkbox-item"><input type="checkbox" name="weekday-${index}" value="thursday"> Thursday</label>
+                            <label class="checkbox-item"><input type="checkbox" name="weekday-${index}" value="friday"> Friday</label>
+                            <label class="checkbox-item"><input type="checkbox" name="weekday-${index}" value="saturday"> Saturday</label>
+                        </div>
+                        <small style="color: var(--cp-gray-600); font-size: 0.85rem; display: block; margin-top: 0.5rem;">
+                            Select at least one weekday. Tasks will recur on selected days.
+                        </small>
+                    </div>
+                    <div class="form-group conditional-field task-date-field">
+                        <label class="form-label">Select Date *</label>
+                        <input type="date" class="form-control task-date-picker" min="2026-04-01" max="2026-04-30">
+                        <small style="color: var(--cp-gray-600); font-size: 0.85rem; display: block; margin-top: 0.5rem;" class="date-hint">
+                            For Monthly tasks: Select a date in April 2026
+                        </small>
+                    </div>
+                </div>
+                <div class="date-preview">
+                    <span class="date-preview-label">First Due Date (Auto-calculated & Locked):</span>
+                    <div class="date-preview-value task-due-date">Apr 1, 2026 18:00:00</div>
+                </div>
+            `;
+            return row;
+        }
+        
+        // Show/hide conditional fields based on frequency selection
+        function setupFrequencyListeners() {
+            document.querySelectorAll('.task-frequency').forEach((select, index) => {
+                select.addEventListener('change', function() {
+                    const row = this.closest('.task-row');
+                    const weekdayField = row.querySelector('.task-weekday-field');
+                    const dateField = row.querySelector('.task-date-field');
+                    const dueDateElement = row.querySelector('.task-due-date');
+                    const datePicker = row.querySelector('.task-date-picker');
+                    const dateHint = row.querySelector('.date-hint');
+                    
+                    // Reset fields
+                    weekdayField.classList.remove('active');
+                    dateField.classList.remove('active');
+                    
+                    // Set date picker constraints based on frequency
+                    switch(this.value) {
+                        case 'daily':
+                            // Disable both fields, show fixed date
+                            dueDateElement.textContent = 'Apr 1, 2026 18:00:00';
+                            break;
+                            
+                        case 'weekly':
+                            // Enable weekday selection, disable date picker
+                            weekdayField.classList.add('active');
+                            dueDateElement.textContent = calculateWeeklyDueDate(row);
+                            break;
+                            
+                        case 'monthly':
+                            // Disable weekday, enable date picker (April 2026 only)
+                            dateField.classList.add('active');
+                            datePicker.min = '2026-04-01';
+                            datePicker.max = '2026-04-30';
+                            dateHint.textContent = 'Select a date in April 2026 (e.g., 15 for 15th of each month)';
+                            datePicker.value = '2026-04-15';
+                            dueDateElement.textContent = `Apr ${new Date(datePicker.value).getDate()}, 2026 18:00:00`;
+                            break;
+                            
+                        case 'quarterly':
+                            // Disable weekday, enable date picker (April-June 2026)
+                            dateField.classList.add('active');
+                            datePicker.min = '2026-04-01';
+                            datePicker.max = '2026-06-30';
+                            dateHint.textContent = 'Select a date between April-June 2026 (first quarter)';
+                            datePicker.value = '2026-04-15';
+                            dueDateElement.textContent = `Apr ${new Date(datePicker.value).getDate()}, 2026 18:00:00`;
+                            break;
+                            
+                        case 'half-yearly':
+                            // Disable weekday, enable date picker (April-Sept 2026)
+                            dateField.classList.add('active');
+                            datePicker.min = '2026-04-01';
+                            datePicker.max = '2026-09-30';
+                            dateHint.textContent = 'Select a date between April-September 2026 (first half)';
+                            datePicker.value = '2026-04-10';
+                            dueDateElement.textContent = `Apr ${new Date(datePicker.value).getDate()}, 2026 18:00:00`;
+                            break;
+                            
+                        case 'yearly':
+                            // Disable weekday, enable date picker (Apr 2026 - Mar 2027)
+                            dateField.classList.add('active');
+                            datePicker.min = '2026-04-01';
+                            datePicker.max = '2027-03-31';
+                            dateHint.textContent = 'Select annual date between Apr 2026 - Mar 2027';
+                            datePicker.value = '2026-04-01';
+                            dueDateElement.textContent = `${new Date(datePicker.value).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})} 18:00:00`;
+                            break;
+                    }
+                });
+                
+                // Setup date picker listener for non-daily frequencies
+                const datePicker = select.closest('.task-row').querySelector('.task-date-picker');
+                if (datePicker) {
+                    datePicker.addEventListener('change', function() {
+                        const row = this.closest('.task-row');
+                        const dueDateElement = row.querySelector('.task-due-date');
+                        const frequency = row.querySelector('.task-frequency').value;
+                        
+                        if (frequency === 'monthly') {
+                            dueDateElement.textContent = `Apr ${new Date(this.value).getDate()}, 2026 18:00:00`;
+                        } else if (frequency === 'quarterly' || frequency === 'half-yearly') {
+                            const date = new Date(this.value);
+                            dueDateElement.textContent = `${date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}, 2026 18:00:00`;
+                        } else if (frequency === 'yearly') {
+                            dueDateElement.textContent = `${new Date(this.value).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})} 18:00:00`;
+                        }
+                    });
+                }
+                
+                // Setup weekday selection listener
+                const checkboxes = select.closest('.task-row').querySelectorAll(`input[name="weekday-${index+1}"]`);
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const row = this.closest('.task-row');
+                        const dueDateElement = row.querySelector('.task-due-date');
+                        dueDateElement.textContent = calculateWeeklyDueDate(row);
+                    });
+                });
+            });
+        }
+        
+        // Calculate weekly due date based on selected weekdays
+        function calculateWeeklyDueDate(row) {
+            const checkboxes = row.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) return 'Select at least one weekday';
+            
+            // April 1, 2026 is a Wednesday (day 3)
+            const startDate = new Date(2026, 3, 1); // Months are 0-indexed (3 = April)
+            const selectedDays = Array.from(checkboxes).map(cb => cb.value);
+            
+            // Map weekdays to numbers (Monday=1, Sunday=0)
+            const dayMap = {
+                'monday': 1,
+                'tuesday': 2,
+                'wednesday': 3,
+                'thursday': 4,
+                'friday': 5,
+                'saturday': 6
+            };
+            
+            // Find the first selected weekday on or after April 1, 2026
+            let currentDate = new Date(startDate);
+            while (true) {
+                const currentDay = currentDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+                // Convert to our mapping (Monday=1, Saturday=6, Sunday=0)
+                const dayName = Object.keys(dayMap).find(key => dayMap[key] === (currentDay === 0 ? 7 : currentDay) % 7 || (currentDay === 0 ? 7 : currentDay));
+                
+                if (selectedDays.includes(dayName)) {
+                    return `${currentDate.toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}, 2026 18:00:00`;
+                }
+                
+                currentDate.setDate(currentDate.getDate() + 1);
+                
+                // Safety break (shouldn't happen with valid selections)
+                if (currentDate > new Date(2026, 3, 30)) break;
+            }
+            
+            return 'Apr 1, 2026 18:00:00';
+        }
+        
+        // Authentication Logic
+        loginBtn.addEventListener('click', function() {
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passwordInput.value.trim();
+            
+            // Hide access denied message initially
+            accessDenied.classList.remove('show');
+            
+            // Validate email format
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Check if domain user (consernpharma.com)
+            if (email.endsWith('@consernpharma.com')) {
+                // Direct login for domain users
+                authPage.style.display = 'none';
+                dashboard.style.display = 'block';
+                document.body.style.overflow = 'auto';
+                return;
+            }
+            
+            // Check if Gmail user with correct password
+            if (email.endsWith('@gmail.com') && password === 'consern123') {
+                authPage.style.display = 'none';
+                dashboard.style.display = 'block';
+                document.body.style.overflow = 'auto';
+                return;
+            }
+            
+            // Show access denied for all other cases
+            accessDenied.classList.add('show');
+            passwordInput.value = '';
+            passwordInput.focus();
+        });
+        
+        // Logout functionality
+        logoutBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                dashboard.style.display = 'none';
+                authPage.style.display = 'flex';
+                emailInput.value = '';
+                passwordInput.value = '';
+                accessDenied.classList.remove('show');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+        
+        // Modal open/close functionality
+        openTeamModalBtn.addEventListener('click', function() {
+            teamModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        openTaskModalBtn.addEventListener('click', function() {
+            // Initialize with 10 task rows
+            initializeTaskRows(10);
+            setupFrequencyListeners();
+            
+            // Set default team member details
+            updateMemberDetails('ananya');
+            
+            taskModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        [closeTeamModal, closeTaskModal, cancelTeamBtn, cancelTaskBtn].forEach(btn => {
+            btn.addEventListener('click', function() {
+                teamModal.classList.remove('active');
+                taskModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Add task row functionality
+        addTaskRowBtn.addEventListener('click', function() {
+            const currentCount = taskRowsContainer.children.length;
+            const newRow = createTaskRow(currentCount + 1);
+            taskRowsContainer.appendChild(newRow);
+            setupFrequencyListeners();
+            
+            // Scroll to new row
+            newRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+        
+        // Remove task row functionality
+        taskRowsContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-row')) {
+                const row = e.target.closest('.task-row');
+                if (taskRowsContainer.children.length > 10) {
+                    row.remove();
+                } else {
+                    alert('Minimum 10 task rows are required. You cannot remove this row.');
+                }
+            }
+        });
+        
+        // Team member selection for global details
+        globalTeamMember.addEventListener('change', function() {
+            if (this.value) {
+                globalMemberDetails.classList.add('show');
+                updateMemberDetails(this.value);
+                
+                // Update all task rows with selected member name
+                document.querySelectorAll('.task-member-name').forEach(input => {
+                    input.value = teamDatabase[this.value].name;
+                });
+            } else {
+                globalMemberDetails.classList.remove('show');
+            }
+        });
+        
+        // Update member details display
+        function updateMemberDetails(memberKey) {
+            if (teamDatabase[memberKey]) {
+                detailName.textContent = teamDatabase[memberKey].name;
+                detailDesignation.textContent = teamDatabase[memberKey].designation;
+                detailEmail.textContent = teamDatabase[memberKey].email;
+                detailMobile.textContent = teamDatabase[memberKey].mobile;
+            }
+        }
+        
+        // Team member form submission
+        submitTeamBtn.addEventListener('click', function() {
+            const name = document.getElementById('memberName').value.trim();
+            const designation = document.getElementById('designation').value;
+            const email = document.getElementById('memberEmail').value.trim();
+            const mobile = document.getElementById('memberMobile').value.trim();
+            
+            if (!name || !designation || !email || !mobile) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Simulate successful submission
+            alert(`✅ Team member added successfully!\n\nName: ${name}\nDesignation: ${designation}\nEmail: ${email}\nMobile: ${mobile}\n\nThis member is now linked to your department and will appear in task assignment dropdowns.`);
+            
+            // Reset form
+            document.getElementById('memberName').value = '';
+            document.getElementById('designation').value = '';
+            document.getElementById('memberEmail').value = '';
+            document.getElementById('memberMobile').value = '';
+            
+            // Close modal
+            teamModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Task submission
+        submitTasksBtn.addEventListener('click', function() {
+            // Validate at least one task has description and frequency
+            const descriptions = document.querySelectorAll('.task-description');
+            const frequencies = document.querySelectorAll('.task-frequency');
+            let isValid = true;
+            
+            for (let i = 0; i < descriptions.length; i++) {
+                if (descriptions[i].value.trim() && !frequencies[i].value) {
+                    alert(`Please select frequency for task #${i+1}`);
+                    frequencies[i].focus();
+                    isValid = false;
+                    break;
+                }
+                if (frequencies[i].value && !descriptions[i].value.trim()) {
+                    alert(`Please enter description for task #${i+1}`);
+                    descriptions[i].focus();
+                    isValid = false;
+                    break;
+                }
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading state
+            const originalText = submitTasksBtn.innerHTML;
+            submitTasksBtn.innerHTML = '<span class="loader"></span>Processing Submission...';
+            submitTasksBtn.classList.add('loading');
+            submitTasksBtn.disabled = true;
+            
+            // Simulate API submission delay
+            setTimeout(() => {
+                // Reset button
+                submitTasksBtn.innerHTML = originalText;
+                submitTasksBtn.classList.remove('loading');
+                submitTasksBtn.disabled = false;
+                
+                // Show success message
+                alert('✅ Tasks successfully submitted!\n\nAll tasks have been assigned to team members and scheduled within the April 2026 - March 2027 operational period. Tasks are now visible in the "Submitted Tasks Overview" section and will appear in team members\' personal dashboards.');
+                
+                // Show submitted tasks section
+                submittedTasksSection.classList.add('show');
+                
+                // Close modal
+                taskModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }, 1800);
+        });
+        
+        // Initialize with 10 task rows when modal opens
+        openTaskModalBtn.addEventListener('click', function() {
+            initializeTaskRows(10);
+        });
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current user name in navbar
+            const userEmail = localStorage.getItem('cp_user_email') || 'hod.sales@consernpharma.com';
+            if (userEmail.includes('sales')) {
+                document.getElementById('userName').textContent = 'Dr. Rajesh Kumar';
+                document.querySelector('.user-role').textContent = 'Head of Sales Department';
+            } else if (userEmail.includes('marketing')) {
+                document.getElementById('userName').textContent = 'Ms. Priya Desai';
+                document.querySelector('.user-role').textContent = 'Head of Marketing Department';
+            }
+            
+            // Initialize task rows for demo
+            initializeTaskRows(10);
+            setupFrequencyListeners();
+            
+            // Set default team member
+            globalTeamMember.value = 'ananya';
+            globalMemberDetails.classList.add('show');
+            updateMemberDetails('ananya');
+            
+            // Auto-focus email field on load
+            emailInput.focus();
+        });
+    
+    
+// ===== CONSERN PHARMA BACKEND INTEGRATION =====
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbw37fB47QYuSa8T5XQsgDdQB_0bOEjx0A_F3KmRfuxCG8ysp0-v3iURs1jSXerSugbi/exec"; // REPLACE WITH YOUR DEPLOYED URL
+
+// Override login function
+document.getElementById('loginBtn').addEventListener('click', async function(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const accessDenied = document.getElementById('accessDenied');
+  
+  accessDenied.classList.remove('show');
+  
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address');
+    return;
+  }
+  
+  // Show loading state
+  const originalText = this.innerHTML;
+  this.innerHTML = '<span class="loader"></span>Authenticating...';
+  this.disabled = true;
+  
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: "login",
+        email: email,
+        password: password
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      // Save session data
+      localStorage.setItem('cp_hod_email', email);
+      localStorage.setItem('cp_department', data.department);
+      localStorage.setItem('cp_user_type', data.userType);
+      
+      // Update UI
+      document.getElementById('userName').textContent = data.hodEmail.includes('sales') ? 'Dr. Rajesh Kumar' : 'Ms. Priya Desai';
+      document.querySelector('.user-role').textContent = `Head of ${data.department} Department`;
+      
+      // Switch to dashboard
+      document.getElementById('authPage').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.body.style.overflow = 'auto';
+      
+      // Load team members
+      loadTeamMembers();
+      
+      // Show welcome message
+      alert(`✅ ${data.message}\n\nYou are now logged in as Head of ${data.department} Department.`);
+    } else {
+      accessDenied.textContent = `Access Denied: ${data.error || 'Invalid credentials'}`;
+      accessDenied.classList.add('show');
+      document.getElementById('password').value = '';
+      document.getElementById('password').focus();
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    accessDenied.textContent = `Connection error: ${error.message}. Please try again or contact MIS support.`;
+    accessDenied.classList.add('show');
+  } finally {
+    this.innerHTML = originalText;
+    this.disabled = false;
+  }
+});
+
+// Load team members from backend
+async function loadTeamMembers() {
+  const hodEmail = localStorage.getItem('cp_hod_email');
+  if (!hodEmail) return;
+  
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: "getTeamMembers",
+        hodEmail: hodEmail
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success && data.members.length > 0) {
+      // Update global team member dropdown
+      const select = document.getElementById('globalTeamMember');
+      select.innerHTML = '<option value="">Select team member to assign tasks</option>';
+      
+      data.members.forEach(member => {
+        const option = document.createElement('option');
+        option.value = member.email;
+        option.textContent = `${member.name} (${member.designation})`;
+        option.dataset.name = member.name;
+        option.dataset.designation = member.designation;
+        option.dataset.email = member.email;
+        option.dataset.mobile = member.mobile;
+        select.appendChild(option);
+      });
+      
+      // Auto-select first member and show details
+      if (data.members[0]) {
+        select.value = data.members[0].email;
+        updateMemberDetailsFromOption(select.options[1]);
+        document.querySelectorAll('.task-member-name').forEach(el => el.value = data.members[0].name);
+      }
+    }
+  } catch (error) {
+    console.error('Load team members error:', error);
+  }
+}
+
+// Update member details when selection changes
+document.getElementById('globalTeamMember').addEventListener('change', function() {
+  const option = this.options[this.selectedIndex];
+  if (option.value) {
+    updateMemberDetailsFromOption(option);
+    
+    // Update all task rows with selected member name
+    document.querySelectorAll('.task-member-name').forEach(input => {
+      input.value = option.dataset.name || option.text.split('(')[0].trim();
+    });
+  }
+});
+
+function updateMemberDetailsFromOption(option) {
+  document.getElementById('globalMemberDetails').classList.add('show');
+  document.getElementById('detailName').textContent = option.dataset.name || option.text.split('(')[0].trim();
+  document.getElementById('detailDesignation').textContent = option.dataset.designation || 'Team Member';
+  document.getElementById('detailEmail').textContent = option.dataset.email || option.value;
+  document.getElementById('detailMobile').textContent = option.dataset.mobile || 'Not provided';
+}
+
+// Override team member submission
+document.getElementById('submitTeamBtn').addEventListener('click', async function(e) {
+  e.preventDefault();
+  const hodEmail = localStorage.getItem('cp_hod_email');
+  const department = localStorage.getItem('cp_department');
+  
+  const memberName = document.getElementById('memberName').value.trim();
+  const designation = document.getElementById('designation').value;
+  const email = document.getElementById('memberEmail').value.trim();
+  const mobile = document.getElementById('memberMobile').value.trim();
+  
+  if (!memberName || !designation || !email || !mobile) {
+    alert('Please fill all required fields');
+    return;
+  }
+  
+  // Show loading state
+  const originalText = this.innerHTML;
+  this.innerHTML = '<span class="loader"></span>Adding Member...';
+  this.disabled = true;
+  
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: "addTeamMember",
+        hodEmail: hodEmail,
+        department: department,
+        memberName: memberName,
+        designation: designation,
+        email: email,
+        mobile: mobile
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      alert(`✅ ${data.message}\n\nMember Details:\nName: ${data.member.name}\nDesignation: ${data.member.designation}\nEmail: ${data.member.email}`);
+      
+      // Reset form
+      document.getElementById('memberName').value = '';
+      document.getElementById('designation').value = '';
+      document.getElementById('memberEmail').value = '';
+      document.getElementById('memberMobile').value = '';
+      
+      // Close modal
+      document.getElementById('teamModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+      
+      // Refresh team members
+      loadTeamMembers();
+    } else {
+      alert(`❌ Error: ${data.error || 'Failed to add team member'}`);
+    }
+  } catch (error) {
+    console.error('Add team member error:', error);
+    alert(`Connection error: ${error.message}. Please try again.`);
+  } finally {
+    this.innerHTML = originalText;
+    this.disabled = false;
+  }
+});
+
+// Override task submission
+document.getElementById('submitTasksBtn').addEventListener('click', async function(e) {
+  e.preventDefault();
+  
+  // Validate tasks
+  const tasks = [];
+  const taskRows = document.querySelectorAll('.task-row');
+  const hodEmail = localStorage.getItem('cp_hod_email');
+  const department = localStorage.getItem('cp_department');
+  const selectedMemberEmail = document.getElementById('globalTeamMember').value;
+  
+  if (!selectedMemberEmail) {
+    alert('Please select a team member first');
+    return;
+  }
+  
+  taskRows.forEach(row => {
+    const description = row.querySelector('.task-description').value.trim();
+    const frequency = row.querySelector('.task-frequency').value;
+    
+    if (description && frequency) {
+      const task = {
+        memberEmail: selectedMemberEmail,
+        memberName: row.querySelector('.task-member-name').value,
+        description: description,
+        frequency: frequency
+      };
+      
+      // Add frequency-specific data
+      if (frequency === 'weekly') {
+        const weekdays = Array.from(row.querySelectorAll('input[type="checkbox"]:checked'))
+          .map(cb => cb.value);
+        if (weekdays.length === 0) {
+          alert(`Please select at least one weekday for task #${row.querySelector('.task-row-number').textContent}`);
+          throw new Error('Missing weekday selection');
+        }
+        task.weekDays = weekdays;
+      } else if (['monthly', 'quarterly', 'half-yearly', 'yearly'].includes(frequency)) {
+        const dateInput = row.querySelector('.task-date-picker');
+        if (dateInput.value) {
+          task.patternDate = dateInput.value;
+        } else {
+          alert(`Please select a date for task #${row.querySelector('.task-row-number').textContent}`);
+          throw new Error('Missing date selection');
+        }
+      }
+      
+      tasks.push(task);
+    }
+  });
+  
+  if (tasks.length === 0) {
+    alert('Please fill at least one task with description and frequency');
+    return;
+  }
+  
+  // Show loading state
+  const originalText = this.innerHTML;
+  this.innerHTML = '<span class="loader"></span>Submitting Tasks...';
+  this.disabled = true;
+  
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: "submitTasks",
+        hodEmail: hodEmail,
+        department: department,
+        tasks: tasks
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      // Show success with details
+      alert(`✅ ${data.message}\n\nTasks Submitted: ${data.tasksSubmitted}\nNotifications Sent: ${data.notificationsSent}\nSample Due Date: ${data.sampleDueDate}\n\nTeam members will receive email notifications with task details.`);
+      
+      // Refresh submitted tasks section
+      loadSubmittedTasks();
+      
+      // Close modal
+      document.getElementById('taskModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    } else {
+      alert(`❌ Submission failed: ${data.error || 'Unknown error'}`);
+    }
+  } catch (error) {
+    console.error('Task submission error:', error);
+    alert(`Connection error: ${error.message}. Please try again or contact MIS support.`);
+  } finally {
+    this.innerHTML = originalText;
+    this.disabled = false;
+  }
+});
+
+// Load submitted tasks for dashboard
+async function loadSubmittedTasks() {
+  const hodEmail = localStorage.getItem('cp_hod_email');
+  if (!hodEmail) return;
+  
+  try {
+    const response = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: "getSubmittedTasks",
+        hodEmail: hodEmail
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success && data.tasks.length > 0) {
+      // Show section
+      document.getElementById('submittedTasksSection').classList.add('show');
+      
+      // Update table (simplified - in production, rebuild table rows)
+      console.log("Loaded tasks:", data.tasks);
+      // Implementation would rebuild the table body with new data
+    }
+  } catch (error) {
+    console.error('Load submitted tasks error:', error);
+  }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Check for existing session
+  const hodEmail = localStorage.getItem('cp_hod_email');
+  if (hodEmail) {
+    document.getElementById('authPage').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    document.body.style.overflow = 'auto';
+    
+    // Update UI with stored data
+    document.querySelector('.user-role').textContent = `Head of ${localStorage.getItem('cp_department') || 'Sales'} Department`;
+    
+    // Load data
+    loadTeamMembers();
+    loadSubmittedTasks();
+  }
+  
+  // Setup logout
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    if (confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('cp_hod_email');
+      localStorage.removeItem('cp_department');
+      localStorage.removeItem('cp_user_type');
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('authPage').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('email').value = '';
+      document.getElementById('password').value = '';
+    }
+  });
+  
+  // Initialize task rows
+  initializeTaskRows(10);
+  setupFrequencyListeners();
+});
+</script>
+</body>
+</html>
